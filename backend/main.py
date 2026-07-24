@@ -168,7 +168,7 @@ def _cors_origins() -> list[str]:
         o.strip()
         for o in os.environ.get(
             "ALLOWED_ORIGINS",
-            "http://localhost:3000,https://app.clipsaas.site",
+            "http://localhost:3000,http://127.0.0.1:3000",
         ).split(",")
         if o.strip()
     ]
@@ -187,7 +187,7 @@ def _configure_cors() -> None:
             if public_url:
                 origins = [public_url]
             else:
-                origins = ["https://app.clipsaas.site"]
+                origins = ["http://localhost:3000"]
             app.add_middleware(
                 CORSMiddleware,
                 allow_origins=origins,

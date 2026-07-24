@@ -66,7 +66,13 @@ if [[ "$OS" == "Linux" ]]; then
   echo "==> Detectado: Linux (VPS)"
 
   if [[ -z "${DOMAIN:-}" ]]; then
-    DOMAIN="app.clipsaas.site"
+    echo ""
+    echo "  Informe o domínio da VPS (ex: legendas.seudominio.com):"
+    read -r DOMAIN
+    if [[ -z "$DOMAIN" ]]; then
+      echo "ERRO: domínio é obrigatório para VPS. Defina DOMAIN=... no backend/.env ou passe como argumento."
+      exit 1
+    fi
     echo "==> Domínio: ${DOMAIN}"
     # Persiste no .env
     if [[ -f "$ROOT/backend/.env" ]]; then
