@@ -22,7 +22,7 @@ Manual passo a passo para **iniciantes**. Você vai clonar o repositório, colar
 3. Você escolhe estilo de legenda e exporta cortes
 4. O sistema gera MP4 com legendas queimadas
 
-> **Por que não é “só Vercel”?** Este app processa vídeos grandes com ffmpeg na sua máquina/servidor. Isso não cabe em hospedagem serverless como Vercel. O fluxo mais simples é: **clonar → colar chave → `bash install.sh`**.
+> **Por que não é "só Vercel"?** Este app processa vídeos grandes com ffmpeg na sua máquina/servidor. Isso não cabe em hospedagem serverless como Vercel. O fluxo mais simples é: **clonar → colar chave → `bash install.sh`**.
 
 ---
 
@@ -41,7 +41,7 @@ Ideal para usar só no seu computador. Acesse em **http://localhost:3000**.
 
 ### A1. Instalar Homebrew (se ainda não tiver)
 
-Abra o **Terminal** (Spotlight → digite “Terminal”) e cole:
+Abra o **Terminal** (Spotlight → digite "Terminal") e cole:
 
 ```bash
 /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
@@ -119,7 +119,7 @@ Ideal para acessar de qualquer lugar com seu domínio, ex: **https://legendas.se
 - **RAM:** mínimo 2 GB (recomendado 4 GB)
 - **Provedores comuns:** Hostinger, DigitalOcean, Contabo, Hetzner
 
-Anote o **IP** da VPS (ex: `161.97.79.7`).
+Anote o **IP** da VPS.
 
 ### B2. Apontar o DNS
 
@@ -129,7 +129,7 @@ No painel do seu domínio (Registro.br, Cloudflare, etc.):
 |------|------|-------|
 | A | `legendas` (ou `@`) | IP da VPS |
 
-Exemplo: `legendas.seudominio.com` → `161.97.79.7`
+Exemplo: `legendas.seudominio.com` → `SEU_IP`
 
 A propagação pode levar de 5 minutos a 24 horas.
 
@@ -143,7 +143,7 @@ ssh root@SEU_IP
 
 Digite a senha quando pedir. Na primeira vez, confirme com `yes`.
 
-> **O que é SSH?** É a forma de controlar o servidor Linux pelo terminal, como se estivesse “dentro” da máquina remota.
+> **O que é SSH?** É a forma de controlar o servidor Linux pelo terminal, como se estivesse "dentro" da máquina remota.
 
 ### B4. Clonar e configurar
 
@@ -203,7 +203,7 @@ bash install.sh --update
 |----------|----------------|-------------|
 | Site não abre (VPS) | DNS ainda propagando | Aguarde até 24h; teste `ping legendas.seudominio.com` |
 | Site não abre (VPS) | Firewall | Libere portas **80** e **443** no painel da VPS |
-| “Chave OpenAI não configurada” | Chave vazia ou inválida | Edite `backend/.env` ou use `/configuracoes` |
+| "Chave OpenAI não configurada" | Chave vazia ou inválida | Edite `backend/.env` ou use `/configuracoes` |
 | Transcrição falha | Sem crédito na OpenAI | Adicione crédito em platform.openai.com/billing |
 | Testar conexão falha | Chave errada ou expirada | Gere nova chave e salve de novo |
 | 502 no upload de vídeo | Vídeo muito grande ou serviço parado | Reinicie: `systemctl restart legendas-backend legendas-frontend` (VPS) ou `./legendas.sh reiniciar` (Mac) |
@@ -242,7 +242,7 @@ Faça backup periódico dessa pasta (copiar para outro disco ou nuvem).
 
 ## Checklist pós-instalação
 
-Use esta lista para confirmar que tudo funciona antes de usar em produção:
+Use esta lista para confirmar que tudo funciona:
 
 - [ ] `/api/health` retorna `"ok": true`
 - [ ] `/api/health` retorna `"openai_configured": true`
@@ -255,13 +255,13 @@ Use esta lista para confirmar que tudo funciona antes de usar em produção:
 
 ## Infra avançada (opcional)
 
-Se sua VPS **já usa Traefik + Docker Swarm** (ex: stack Clonefy), rode:
+Se sua VPS **já usa Traefik + Docker Swarm**, rode:
 
 ```bash
 USE_TRAEFIK=true DOMAIN=legendas.seudominio.com bash deploy/setup.sh
 ```
 
-Para a maioria dos compradores, o caminho padrão com **Caddy** (`bash install.sh`) é mais simples.
+Para a maioria dos casos, o caminho padrão com **Caddy** (`bash install.sh`) é mais simples.
 
 ---
 

@@ -321,7 +321,7 @@ async def create_checkout_charge(
     if not is_multi_tenant():
         raise HTTPException(404, "not found")
 
-    if (os.environ.get("CHECKOUT_ENABLED") or "true").strip().lower() not in {"1", "true", "yes"}:
+    if (os.environ.get("CHECKOUT_ENABLED") or "false").strip().lower() not in {"1", "true", "yes"}:
         raise HTTPException(503, "Checkout temporariamente indisponível.")
 
     _validate_checkout_identity(body)
