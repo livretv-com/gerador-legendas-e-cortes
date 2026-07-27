@@ -123,6 +123,14 @@ def _recover_stale_render_state(job: Job) -> None:
         clips.update_clips(job.job_dir(), clip_list, manual=True)
 
 app = FastAPI(title="Legendas Locais")
+@app.get("/")
+def root():
+    return {"status": "online", "message": "API Legendas Locais rodando! Acesse /docs"}
+
+@app.get("/api/health")
+def health():
+    return {"ok": True}
+    
 app.include_router(hosted_router)
 app.include_router(admin_router)
 app.include_router(mobile_router)
